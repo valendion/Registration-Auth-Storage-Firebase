@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:test_revamph/controller/login_controller.dart';
 import 'package:test_revamph/page/home_page.dart';
+import 'package:test_revamph/page/registration_page.dart';
 
 import '../services/firebase_auth_services.dart';
 import '../utils/constans.dart';
@@ -82,7 +83,9 @@ class LoginPage extends StatelessWidget {
                   children: [
                     const Text('Not a member ? '),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(RegistrationPage.nameRoute);
+                      },
                       child: const Text('Register Now'),
                     )
                   ],
