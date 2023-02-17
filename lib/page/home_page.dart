@@ -9,12 +9,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SvgPicture.asset(
-            '${Constans.rootPath}illustrator_sign_up.svg',
-          )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 200,
+              width: 200,
+              child: SvgPicture.asset(
+                '${Constans.rootPath}illustrator_sign_up.svg',
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

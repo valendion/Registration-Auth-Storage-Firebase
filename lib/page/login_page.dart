@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:test_revamph/controller/login_controller.dart';
+import 'package:test_revamph/page/home_page.dart';
 
+import '../services/firebase_auth_services.dart';
 import '../utils/constans.dart';
 
 class LoginPage extends StatelessWidget {
@@ -55,10 +57,20 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (loginController.validationLogin() != null) {
                             Get.snackbar('Validation alert',
                                 loginController.validationLogin().toString());
+                          } else {
+                            var status =
+                                await FirebaseAuthServices.signInEmailPass(
+                                    loginController.emailInput.value.text,
+                                    loginController.passInput.value.text);
+
+                            status.fold(
+                                (l) => Get.offNamed(HomePage.nameRoute),
+                                (r) => Get.snackbar(
+                                    'Message', r.message.toString()));
                           }
                         },
                         child: const Text('Login'))),
