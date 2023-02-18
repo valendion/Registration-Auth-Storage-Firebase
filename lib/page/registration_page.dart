@@ -52,6 +52,8 @@ class RegistrationPage extends StatelessWidget {
                 onTap: () async {
                   var imagePath =
                       await CameraHelper.getPicture().then((value) async {
+                    registrationController.imageProfile.value =
+                        value?.path ?? '';
                     registrationController.imageDownload.value =
                         await registrationController.getLinkDownload();
                     debugPrint(registrationController.imageDownload.value);
@@ -171,7 +173,22 @@ class RegistrationPage extends StatelessWidget {
               SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                      onPressed: () async {}, child: const Text('Send'))),
+                      onPressed: () async {
+                        if (registrationController.validationRegistration() ==
+                            null) {
+                          var message =
+                              await registrationController.uploadRegistration();
+                          message.fold((l) => Get.snackbar('Message', l),
+                              (r) => Get.snackbar('Message', r.message));
+                        } else {
+                          Get.snackbar(
+                              'Validation alert',
+                              registrationController
+                                  .validationRegistration()
+                                  .toString());
+                        }
+                      },
+                      child: const Text('Send'))),
             ],
           ),
         ),
